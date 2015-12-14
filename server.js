@@ -38,7 +38,7 @@ router.route('/jobs')
 		job.category = req.body.category;
 		job.description = req.body.description;
 		job.contract = req.body.contract;
-		job.date = req.body.date;
+		job.date = req.body.date; // a faire : remplacer par un type date
 		job.tags = req.body.tags;
         // save the job and check for errors
         job.save(function(err) {
