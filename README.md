@@ -1,6 +1,6 @@
 # Remixjobs
 
-> Unofficial Remixjobs API
+> Unofficial Remixjobs API by Damien Saillard
 
 ## Introduction
 

@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 var port = process.env.PORT || 8080;        // set our port
 
 // ROUTES FOR OUR API
-// =============================================================================
+// ===========================================================================================
 var router = express.Router();              // get an instance of the express Router
 
 router.route('/jobs')
@@ -49,7 +49,7 @@ router.route('/jobs')
         
     })
 	
-	.get(function(req, res) {
+	.get(function(req, res) { // get la liste des job
         Job.find(function(err, jobs) {
             if (err)
                 res.send(err);
@@ -121,7 +121,7 @@ url = "https://remixjobs.com/?page="+i+"&in=all";
 request(url, function(error, response, html){
     if(!error){
         var $ = cheerio.load(html);
-		$('.jobs-list').children().each(
+		$('.jobs-list').children().each( // pour chaque job dans la liste on crée le job
 			function(){
 				var data =$(this);
 				var job = new Job();
@@ -129,7 +129,7 @@ request(url, function(error, response, html){
 				job.company = data.find('.company').text();
 				job.localization = data.find('.workplace').text();
 				job.category = data.find('.job-link').attr("href").split("/")[2];
-				job.description = " ";
+				job.description = " "; // a faire, ajouter description
 				job.contract = data.find('.contract').attr("data-contract-type");
 				job.date = data.find('.job-details-right').text();
 				data.find('.tag').each(function(){
