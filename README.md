@@ -31,3 +31,5 @@ Pour les POST, les informations sont à mettre dans Body en respectant le schém
 	contract: String,
 	date: String,
 	tags: [String]
+
+* /companies GET pour recuperer la liste des companies

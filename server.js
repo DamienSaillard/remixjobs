@@ -97,16 +97,17 @@ router.route('/jobs/:job_id') // pour recuperer un job par id et modifier un job
         });
     });
 	
-router.route('/companies')	//a faire
-
+router.route('/companies')	//pour retourner la liste des companies
 	.get(function(req, res) {
-        Job.find(function(err, jobs) {
-            if (err)
-                res.send(err);
-			
-            res.json(jobs);
-        });
-    });
+		Job.aggregate([{$group:{_id:"$company", count :{$sum:1}}}])
+			.exec(function(err,companies)
+			{
+				if(err)
+					res.send(err); 
+				res.json(companies);
+			})
+	})
+    
 
 app.get('/scrape', function(req, res){ //scrapping 
 
