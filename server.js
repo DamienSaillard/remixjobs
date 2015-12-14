@@ -5,12 +5,11 @@
 var express    = require('express');        // call express
 var app        = express();                 // define our app using express
 var bodyParser = require('body-parser');
-
 var fs = require('fs');
 var request = require('request');
 var cheerio = require('cheerio');
-
 var mongoose   = require('mongoose');
+
 mongoose.connect('mongodb://localhost/remixjobsdb'); // connect to our database
 
 var Job     = require('./app/models/job');
