@@ -6,6 +6,10 @@ var express    = require('express');        // call express
 var app        = express();                 // define our app using express
 var bodyParser = require('body-parser');
 
+var fs = require('fs');
+var request = require('request');
+var cheerio = require('cheerio');
+
 var mongoose   = require('mongoose');
 mongoose.connect('mongodb://localhost/remixjobsdb'); // connect to our database
 
@@ -105,6 +109,43 @@ router.route('/companies')
         });
     });
 
+app.get('/scrape', function(req, res){
+
+Job.remove({},function(err){
+	//console.log("Cleared !");
+});
+
+url = 'https://remixjobs.com/';
+
+request(url, function(error, response, html){
+    if(!error){
+        var $ = cheerio.load(html);
+		$('.jobs-list').children().each(
+			function(){
+				var data =$(this);
+				var job = new Job();
+				job.title = data.find('.job-link').text();
+				job.company = data.find('.company').text();
+				job.localization = data.find('.workplace').text();
+				job.category = data.find('.job-link').attr("href").split("/")[2];
+				job.description = " ";
+				job.contract = data.find('.contract').attr("data-contract-type");
+				job.date = data.find('.job-details-right').text();
+				data.find('.tag').each(function(){
+					var tag=$(this).attr("data-tag-name");
+					job.tags.push(tag);
+				})
+				
+				job.save(function(err) {
+					if (err)
+						res.send(err);
+
+						//res.json({ message: 'Job created!' });
+					});
+			});
+}})
+});	
+	
 // middleware to use for all requests
 router.use(function(req, res, next) {
     // do logging

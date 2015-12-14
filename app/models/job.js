@@ -10,7 +10,7 @@ var JobSchema   = new Schema({
 	description: String,
 	contract: String,
 	date: String,
-	tags: String
+	tags: [String]
 });
 
 module.exports = mongoose.model('Job', JobSchema);
