@@ -59,9 +59,9 @@ router.route('/jobs')
         });
     });
 	
-router.route('/jobs/:job_id')
+router.route('/jobs/:job_id') // pour recuperer un job par id et modifier un job par id
 
-    // get the job with that id (accessed at GET http://localhost:8080/api/bears/:bear_id)
+    // get the job with that id (accessed at GET http://localhost:8080/api/jobs/:job_id)
     .get(function(req, res) {
         Job.findById(req.params.job_id, function(err, job) {
             if (err)
@@ -70,7 +70,7 @@ router.route('/jobs/:job_id')
         });
     })
 
-    // update the job with this id (accessed at PUT http://localhost:8080/api/bears/:bear_id)
+    // update the job with this id (accessed at PUT http://localhost:8080/api/job/:job_id)
     .put(function(req, res) {
 
         // use our bear model to find the job we want
@@ -98,7 +98,7 @@ router.route('/jobs/:job_id')
         });
     });
 	
-router.route('/companies')	
+router.route('/companies')	//a faire
 
 	.get(function(req, res) {
         Job.find(function(err, jobs) {
@@ -109,13 +109,14 @@ router.route('/companies')
         });
     });
 
-app.get('/scrape', function(req, res){
+app.get('/scrape', function(req, res){ //scrapping 
 
 Job.remove({},function(err){
 	//console.log("Cleared !");
 });
 
-url = 'https://remixjobs.com/';
+for(i=1;i<50;i++){ //on scrape chaque page 
+url = "https://remixjobs.com/?page="+i+"&in=all";
 
 request(url, function(error, response, html){
     if(!error){
@@ -139,11 +140,10 @@ request(url, function(error, response, html){
 				job.save(function(err) {
 					if (err)
 						res.send(err);
-
-						//res.json({ message: 'Job created!' });
 					});
 			});
 }})
+}
 });	
 	
 // middleware to use for all requests

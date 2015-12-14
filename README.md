@@ -13,6 +13,7 @@ Scrapping et API dans le fichier server.js
 
 ## Fait
 
-* Scrapping
-* /jobs et /jobs/:id_job
+* Scrapping 
+* /jobs (consulter les jobs,afficher un job par id,creer un job, modifier un job)
+
 
