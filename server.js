@@ -86,7 +86,8 @@ router.route('/jobs/:job_id') // pour recuperer un job par id et modifier un job
 			job.contract = req.body.contract;
 			job.date = req.body.date;
 			job.tags = req.body.tags;
-            // save the job
+			
+			// save the job
             job.save(function(err) {
                 if (err)
                     res.send(err);
@@ -136,6 +137,15 @@ request(url, function(error, response, html){
 					var tag=$(this).attr("data-tag-name");
 					job.tags.push(tag);
 				})
+				
+				//traitement date
+				var mois = ["janv.","févr.","mars","avr.","mai","juin","juil.","août","sept.","oct.","nov.","déc.","heures"];
+				var mymonth = job.date.split(" ");
+				var monthnb = mois.indexOf(mymonth[1])+1;
+				if(monthnb==13)
+					job.date = new Date();
+				job.date = mymonth[0]+"/"+monthnb+"/"+mymonth[2];
+				
 				
 				job.save(function(err) {
 					if (err)
